@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-void Comp_Interest(double principal, double rate, int time, int compound) {
+double Comp_Interest(double principal, double rate, double time, double compound) {
     /*
     Formula: P(1 + r/n) ** (nt) 
     P = Principal
@@ -10,13 +10,6 @@ void Comp_Interest(double principal, double rate, int time, int compound) {
     n = times compounded
     */ 
 
-   double A, result;
-   int power;
-
-    A = principal * (1 + (rate / compound));
-    power = compound * time;
-    result = pow(A, power);
-
    printf("Enter initial principal amount: ");
    scanf("%lf", &principal);
 
@@ -24,19 +17,25 @@ void Comp_Interest(double principal, double rate, int time, int compound) {
    scanf("%lf", &rate);
 
    printf("Expected time to hold investment: ");
-   scanf("%d", &time);
+   scanf("%lf", &time);
 
    printf("Number of distributions per year: (1 / 2 / 4 / 12) : ");
-   scanf("%d", &compound);
+   scanf("%lf", &compound);
 
-   printf("\n");
+   return principal * pow((1 + rate / compound), compound * time);
+    // double power = compound * time;
+
+    // printf("%lf is your anticipated sum", pow(A, power));
+
+//    printf("\n");
     
 
-    printf("After %d years and %lf percent rate of return: \n", time, rate * 100);
-    printf("Result: $%lf \n", result);
+    // printf("After %.1lf years and a %.2lf percent rate of return: \n", time, rate * 100);
+    // printf("Result: $%lf \n", A);
+
 }
 
-void CashFlow(int FCF, double rate, int time) {
+double CashFlow(int FCF, double rate, int time) {
     /*
      Stock Valuation - Discounted Cash Flow Analysis
 
@@ -55,16 +54,16 @@ void CashFlow(int FCF, double rate, int time) {
    scanf("%d", &time);
 
 
-    double result = FCF / pow(1 + rate, time);
+    return FCF / pow(1 + rate, time);
 
-    printf("Result: $%lf", result);
+    // printf("Result: $%lf", result);
 
 }
 
 int main() {
 
-    double principal, rate;
-    int time, compound, selection, FCF;
+    double principal, rate, power, A, time, compound, FCF;
+    int selection;
 
 
     printf("Welcome to this little finance tool! \n");
@@ -81,14 +80,15 @@ int main() {
     {
     case 1: 
         if(selection == 1) {
-            Comp_Interest(principal, compound, rate, time);
+            double Interest = Comp_Interest(principal, compound, rate, time);
+            printf("Compound Interest: $%.2lf", Interest);
         }
         
         break;
     
     case 2: 
         if(selection == 2) {
-            CashFlow(FCF, rate, time);
+            printf("%lf", CashFlow(FCF, rate, time));
         }
     
     default:

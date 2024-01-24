@@ -35,7 +35,7 @@ double Comp_Interest(double principal, double rate, double time, double compound
 
 }
 
-double CashFlow(int FCF, double rate, int time) {
+void CashFlow(int FCF, double rate, int time) {
     /*
      Stock Valuation - Discounted Cash Flow Analysis
 
@@ -43,6 +43,9 @@ double CashFlow(int FCF, double rate, int time) {
      If we were to write a program for this formula, we need to take into account the
      number of periods
     */
+
+   printf("The purpose of this is to find the intrinsic value of the business");
+   printf("\n");
 
    printf("Enter the Free Cash Flow (FCF) for the business: ");
    scanf("%d", &FCF);
@@ -54,7 +57,7 @@ double CashFlow(int FCF, double rate, int time) {
    scanf("%d", &time);
 
 
-    return FCF / pow(1 + rate, time);
+    printf("$%lf", FCF / pow(1 + rate, time));
 
     // printf("Result: $%lf", result);
 
@@ -83,12 +86,11 @@ int main() {
             double Interest = Comp_Interest(principal, compound, rate, time);
             printf("Compound Interest: $%.2lf", Interest);
         }
-        
         break;
     
     case 2: 
         if(selection == 2) {
-            printf("%lf", CashFlow(FCF, rate, time));
+            CashFlow(FCF, rate, time);
         }
     
     default:

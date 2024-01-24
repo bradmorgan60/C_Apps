@@ -35,7 +35,7 @@ double Comp_Interest(double principal, double rate, double time, double compound
 
 }
 
-void CashFlow(int FCF, double rate, int time) {
+double DCF_Model(double* cashflow, double rate, int time) {
     /*
      Stock Valuation - Discounted Cash Flow Analysis
 
@@ -44,29 +44,22 @@ void CashFlow(int FCF, double rate, int time) {
      number of periods
     */
 
-   printf("The purpose of this is to find the intrinsic value of the business");
-   printf("\n");
+    double dcf = 0.00;
+    for(int i = 0; i < time; i++) {
 
-   printf("Enter the Free Cash Flow (FCF) for the business: ");
-   scanf("%d", &FCF);
+        dcf += cashflow[i] / pow(1 + rate, i + 1);
+    }
 
-   printf("Enter the interest rate: ");
-   scanf("%lf", &rate);
-
-   printf("Enter the number of periods: ");
-   scanf("%d", &time);
-
-
-    printf("$%lf", FCF / pow(1 + rate, time));
+    return dcf;
 
     // printf("Result: $%lf", result);
-
 }
 
 int main() {
 
     double principal, rate, power, A, time, compound, FCF;
     int selection;
+    double cashflow;
 
 
     printf("Welcome to this little finance tool! \n");
@@ -90,13 +83,31 @@ int main() {
     
     case 2: 
         if(selection == 2) {
-            CashFlow(FCF, rate, time);
+            int time;
+        double rate;
+
+        printf("Enter the discount rate: ");
+        scanf("%lf", &rate);
+
+        printf("Enter the number of years: ");
+        scanf("%d", &time);
+
+        double cashflow[time];
+        for (int i = 0; i < time; i++)
+        {
+            printf("Enter the future cashflow for period %d : ", i + 1);
+            scanf("%lf", &cashflow[i]);
+        }
+
+        double dcf = DCF_Model(cashflow, rate, time);
+        
+        printf("Discounted Cash Flow: %.2lf", dcf);
+
         }
     
     default:
         break;
     }
-
 
     return 0;
 }

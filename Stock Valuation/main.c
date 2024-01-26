@@ -51,8 +51,6 @@ double DCF_Model(double* cashflow, double rate, int time) {
     }
 
     return dcf;
-
-    // printf("Result: $%lf", result);
 }
 
 int main() {

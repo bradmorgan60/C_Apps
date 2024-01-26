@@ -52,25 +52,39 @@ void listTask() {
     }
 }
 
-void editmy_tasks() {
+void editTask(int index, const char* task) {
+    index = index -1;
+    char *editedTask = (char *)realloc(my_tasks[index].task, strlen(task) + 1);
+
+    if (editedTask != NULL) {
+        my_tasks[index].task = editedTask;
+        strcpy(my_tasks[length].task, task);
+
+    } else {
+        printf("Invalid Index");
+    }
 
 }
 
-void deletemy_tasks(int index) {
+void deleteTask(int index) {
     if (index <= length && index > 0) {
         index = index - 1;
         free(my_tasks[index].task);
-        for (int i = 0; i < length - 1; i++)
+        for (int i = 0; i < length - 1; i++) 
         // When one task is deleted, it creates a gap. We need to remove that gap...hence 'length - 1' is used
-        // a b c d e ---> a b d e (if c was deleted)
+        // a b c d e ---> a b d e (if c was deleted); if we did not do this, it would be a b   d e
         {
-            
+            my_tasks[i] = my_tasks[i + 1];
         }
+        length--;
+
+        my_tasks = (Task *)realloc(my_tasks, (length * sizeof(Task)));
         
         printf("Task deleted...");
     } else {
         printf("Invalid index...");
 
+}
 }
 
 void markCompleted(int index) {
@@ -84,18 +98,17 @@ void markCompleted(int index) {
 }
 
 
+
 int main()
 {
-    switch ()
-    {
-    case 1:
-        // Add task
-        
-        break;
-    
-    default:
-        break;
-    }
+    printf("\nOptions\n");
+    printf("1. Add task \n");
+    printf("2. List all tasks \n");
+    printf("3. Mark as completed \n");
+    printf("4. Edit task \n");
+    printf("5. Delete task \n");
+    printf("6. Exit\n");
+
 
     return 0;
 }
